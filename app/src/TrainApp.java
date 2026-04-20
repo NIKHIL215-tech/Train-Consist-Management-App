@@ -1,44 +1,50 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TrainApp {
 
-    public static void main(String[] args) {
+    // Helper method to simulate searching
+    public static void searchBogie(List<String> bogies, String searchKey) {
+        System.out.println("\nChecking train consist for searching...");
 
-        System.out.println("=== UC19 - Binary Search for Bogie ID (Optimized) ===");
-
-        // Pre-sorted array of bogie IDs (Binary Search requirement)
-        String[] bogieIds = {"B101", "B102", "B103", "B104", "B105"};
-        String searchKey = "B104";
-
-        System.out.println("\nSorted Bogie IDs: " + Arrays.toString(bogieIds));
-        System.out.println("Searching for: " + searchKey);
-
-        // 🔥 BINARY SEARCH
-        int low = 0;
-        int high = bogieIds.length - 1;
-        int position = -1;
-
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            int comparison = searchKey.compareTo(bogieIds[mid]);
-
-            if (comparison == 0) {
-                position = mid;
-                break; // Found
-            } else if (comparison > 0) {
-                low = mid + 1; // Search right half
-            } else {
-                high = mid - 1; // Search left half
-            }
+        // 🔥 DEFENSIVE CHECK: Validation step
+        if (bogies.isEmpty()) {
+            throw new IllegalStateException("ERROR: Cannot perform search! The train consist is empty (No bogies attached).");
         }
 
-        // Result output
-        if (position != -1) {
-            System.out.println("Result: Bogie " + searchKey + " found at index " + position + " (using Binary Search) ✅");
+        System.out.println("Bogie list is valid. Proceeding with search for: " + searchKey);
+        
+        if (bogies.contains(searchKey)) {
+            System.out.println("Result: Bogie " + searchKey + " found ✅");
         } else {
             System.out.println("Result: Bogie " + searchKey + " not found ❌");
         }
+    }
 
-        System.out.println("\nUC19 binary search completed...");
+    public static void main(String[] args) {
+
+        System.out.println("=== UC20 - Exception Handling During Search Operations ===");
+
+        // 1️⃣ Case: Searching with empty list (Will fail fast)
+        List<String> emptyTrain = new ArrayList<>();
+        
+        try {
+            searchBogie(emptyTrain, "B101");
+        } catch (IllegalStateException e) {
+            System.out.println("Exception Caught: " + e.getMessage());
+        }
+
+        // 2️⃣ Case: Searching with valid list
+        List<String> validTrain = new ArrayList<>();
+        validTrain.add("B101");
+        validTrain.add("B102");
+
+        try {
+            searchBogie(validTrain, "B101");
+        } catch (IllegalStateException e) {
+            System.out.println("Exception Caught: " + e.getMessage());
+        }
+
+        System.out.println("\nUC20 defensive programming completed...");
     }
 }
