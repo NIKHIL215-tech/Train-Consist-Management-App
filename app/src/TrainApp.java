@@ -1,74 +1,33 @@
-import java.util.ArrayList;
-import java.util.List;
-
-// 🔥 Custom Runtime Exception for Cargo Safety
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
-
-// 🚆 Goods Bogie Class
-class GoodsBogie {
-    String type;   // Cylindrical, Rectangular
-    String cargo;  // Petroleum, Coal, Grain
-
-    GoodsBogie(String type) {
-        this.type = type;
-        this.cargo = "Empty";
-    }
-
-    // 🔥 Assignment method with safety validation
-    public void assignCargo(String newCargo) {
-        System.out.println("\nAttempting to assign " + newCargo + " to " + type + " bogie...");
-        
-        try {
-            // Safety Rule: Petroleum must ONLY be in Cylindrical bogies
-            if (newCargo.equalsIgnoreCase("Petroleum") && !type.equalsIgnoreCase("Cylindrical")) {
-                throw new CargoSafetyException("SAFETY ALERT: Petroleum cannot be assigned to " + type + " bogie!");
-            }
-            
-            this.cargo = newCargo;
-            System.out.println("Assignment SUCCESS ✅: " + newCargo + " assigned to " + type);
-            
-        } catch (CargoSafetyException e) {
-            System.out.println("Assignment FAILED ❌: " + e.getMessage());
-        } finally {
-            // finally block always executes
-            System.out.println("Validation Process Completed for " + type + " bogie.");
-        }
-    }
-
-    @Override
-    public String toString() {
-        return type + " Bogie [Cargo: " + cargo + "]";
-    }
-}
+import java.util.Arrays;
 
 public class TrainApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=== UC15 - Safe Cargo Assignment Using try-catch-finally ===");
+        System.out.println("=== UC16 - Sort Passenger Bogies by Capacity (Bubble Sort) ===");
 
-        // Create different types of goods bogies
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
+        // Create an array of passenger bogie capacities
+        int[] capacities = {72, 56, 24, 90, 40};
 
-        // 1️⃣ Safe Assignment
-        b1.assignCargo("Petroleum");
+        System.out.println("\nBefore Sorting: " + Arrays.toString(capacities));
 
-        // 2️⃣ Unsafe Assignment (Will trigger exception handling)
-        b2.assignCargo("Petroleum");
+        // 🔥 BUBBLE SORT ALGORITHM
+        int n = capacities.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                // Compare adjacent values
+                if (capacities[j] > capacities[j + 1]) {
+                    // Swap values if out of order
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
 
-        // 3️⃣ Another Safe Assignment
-        b2.assignCargo("Coal");
+        // Display sorted result
+        System.out.println("After Sorting (Bubble Sort): " + Arrays.toString(capacities));
 
-        // Display Final Status
-        System.out.println("\nFinal Train Status:");
-        System.out.println(b1);
-        System.out.println(b2);
-
-        System.out.println("\nUC15 structured exception handling completed...");
+        System.out.println("\nUC16 Bubble Sort completed...");
     }
 }
