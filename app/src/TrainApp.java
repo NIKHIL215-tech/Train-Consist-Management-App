@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Bogie class (Custom Object)
 class Bogie {
@@ -14,8 +14,9 @@ class Bogie {
     }
 
     // Method to display bogie details
-    public void display() {
-        System.out.println(name + " -> " + capacity);
+    @Override
+    public String toString() {
+        return name + " -> " + capacity;
     }
 }
 
@@ -23,30 +24,33 @@ public class TrainApp {
 
     public static void main(String[] args) {
 
-        // Create list of Bogie objects
+        System.out.println("=== UC8 - Filter Bogies using Streams ===");
+
+        // Original list (same as UC7)
         List<Bogie> bogies = new ArrayList<>();
 
-        // Adding bogies
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 24));
         bogies.add(new Bogie("General", 90));
 
-        // Before sorting
-        System.out.println("Before Sorting:");
+        // Display original list
+        System.out.println("\nOriginal Bogies:");
         for (Bogie b : bogies) {
-            b.display();
+            System.out.println(b);
         }
 
-        // Sorting using Comparator (by capacity)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // 🔥 Stream filtering (capacity > 60)
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        // After sorting
-        System.out.println("\nAfter Sorting by Capacity:");
-        for (Bogie b : bogies) {
-            b.display();
+        // Display filtered result
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        for (Bogie b : filteredBogies) {
+            System.out.println(b);
         }
 
-        System.out.println("UC7 sorting completed...");
+        System.out.println("\nUC8 filtering completed...");
     }
 }
