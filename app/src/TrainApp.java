@@ -4,19 +4,34 @@ public class TrainApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=== UC17 - Sort Bogie Names Using Arrays.sort() ===");
+        System.out.println("=== UC18 - Linear Search for Bogie ID ===");
 
-        // Create an array of bogie type names
-        String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "General", "Pantry"};
+        // Array of bogie IDs
+        String[] bogieIds = {"B101", "B105", "B103", "B102", "B104"};
+        String searchKey = "B103";
 
-        System.out.println("\nBefore Sorting: " + Arrays.toString(bogieTypes));
+        System.out.println("\nBogie IDs: " + Arrays.toString(bogieIds));
+        System.out.println("Searching for: " + searchKey);
 
-        // 🔥 Built-in Sorting using Arrays.sort()
-        Arrays.sort(bogieTypes);
+        // 🔥 LINEAR SEARCH
+        boolean found = false;
+        int position = -1;
 
-        // Display sorted result
-        System.out.println("After Alphabetical Sorting: " + Arrays.toString(bogieTypes));
+        for (int i = 0; i < bogieIds.length; i++) {
+            if (bogieIds[i].equals(searchKey)) {
+                found = true;
+                position = i;
+                break; // Stop immediately once found
+            }
+        }
 
-        System.out.println("\nUC17 library sorting completed...");
+        // Result output
+        if (found) {
+            System.out.println("Result: Bogie " + searchKey + " found at index " + position + " ✅");
+        } else {
+            System.out.println("Result: Bogie " + searchKey + " not found ❌");
+        }
+
+        System.out.println("\nUC18 linear search completed...");
     }
 }
