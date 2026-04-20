@@ -1,21 +1,19 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-// Bogie class (Custom Object)
-class Bogie {
-    String name;
-    int capacity;
+// Goods Bogie class
+class GoodsBogie {
+    String type;   // Cylindrical, Rectangular, Open, Box
+    String cargo;  // Petroleum, Coal, Grain, etc.
 
-    // Constructor
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
+    GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
     }
 
-    // Method to display bogie details
-    public void display() {
-        System.out.println(name + " -> " + capacity);
+    @Override
+    public String toString() {
+        return type + " -> " + cargo;
     }
 }
 
@@ -23,30 +21,35 @@ public class TrainApp {
 
     public static void main(String[] args) {
 
-        // Create list of Bogie objects
-        List<Bogie> bogies = new ArrayList<>();
+        System.out.println("=== UC12 - Safety Compliance Check ===");
 
-        // Adding bogies
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("General", 90));
+        // Create goods bogies
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-        // Before sorting
-        System.out.println("Before Sorting:");
-        for (Bogie b : bogies) {
-            b.display();
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
+        bogies.add(new GoodsBogie("Rectangular", "Coal"));      // allowed
+        bogies.add(new GoodsBogie("Open", "Grain"));            // allowed
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
+
+        // Display bogies
+        System.out.println("\nGoods Bogies:");
+        bogies.forEach(System.out::println);
+
+        // 🔥 SAFETY RULE USING allMatch()
+        boolean isSafe = bogies.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        // Output result
+        System.out.println("\nSafety Status:");
+        if (isSafe) {
+            System.out.println("Train is SAFE ✅");
+        } else {
+            System.out.println("Train is UNSAFE ❌");
         }
 
-        // Sorting using Comparator (by capacity)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
-
-        // After sorting
-        System.out.println("\nAfter Sorting by Capacity:");
-        for (Bogie b : bogies) {
-            b.display();
-        }
-
-        System.out.println("UC7 sorting completed...");
+        System.out.println("\nUC12 safety check completed...");
     }
 }
