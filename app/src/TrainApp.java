@@ -4,30 +4,19 @@ public class TrainApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=== UC16 - Sort Passenger Bogies by Capacity (Bubble Sort) ===");
+        System.out.println("=== UC17 - Sort Bogie Names Using Arrays.sort() ===");
 
-        // Create an array of passenger bogie capacities
-        int[] capacities = {72, 56, 24, 90, 40};
+        // Create an array of bogie type names
+        String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "General", "Pantry"};
 
-        System.out.println("\nBefore Sorting: " + Arrays.toString(capacities));
+        System.out.println("\nBefore Sorting: " + Arrays.toString(bogieTypes));
 
-        // 🔥 BUBBLE SORT ALGORITHM
-        int n = capacities.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                // Compare adjacent values
-                if (capacities[j] > capacities[j + 1]) {
-                    // Swap values if out of order
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
-            }
-        }
+        // 🔥 Built-in Sorting using Arrays.sort()
+        Arrays.sort(bogieTypes);
 
         // Display sorted result
-        System.out.println("After Sorting (Bubble Sort): " + Arrays.toString(capacities));
+        System.out.println("After Alphabetical Sorting: " + Arrays.toString(bogieTypes));
 
-        System.out.println("\nUC16 Bubble Sort completed...");
+        System.out.println("\nUC17 library sorting completed...");
     }
 }
